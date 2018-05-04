@@ -6,7 +6,12 @@ app = Flask(__name__)
 
 @app.route('/questions', methods=['GET'])
 def questions():
-    results = data.getAllItems()
+    search = request.args.get('search', '')
+    if search == '':
+        results = data.getAllItems()
+    else:
+        results = data.getItemMatching(search)
+    
     return jsonify(results)
 
 @app.route('/questions', methods=['POST'])
