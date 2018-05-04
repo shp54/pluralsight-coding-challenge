@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Input } from 'semantic-ui-react';
+import { Input, Container, Button } from 'semantic-ui-react';
 import QuestionList from './QuestionList';
 
 import 'semantic-ui-css/semantic.min.css';
@@ -29,8 +29,13 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Input onChange={this.handleSearch} />
-        <QuestionList questions={this.state.data} />
+        <Container textAlign="left">
+          <div className='ui large header'>Question Database</div>
+          <div>
+            <Input onChange={this.handleSearch} size="large" placeholder="Search questions..." />
+          </div>
+          <QuestionList questions={this.state.data} />
+        </Container>
       </div>
     );
   }

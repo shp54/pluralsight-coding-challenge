@@ -10,3 +10,24 @@
 .questionLabel {
   padding-bottom: 5px;
 }
+
+.question {
+  margin: 10px;
+  border: 1px solid #d3d3d3;
+  border-radius: 15px;
+}
+
+.hidden {
+  border-radius: 15px 15px 0px 0px;
+}
+
+.active {
+  border-radius: 15px;
+  padding-bottom: 5px;
+}
+
+.questionHeader {
+  padding: 10px !important;
+  background-color: #d3d3d3;
+  border-radius: 15px 15px 0px 0px;
+}
