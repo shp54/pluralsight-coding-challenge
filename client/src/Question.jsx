@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import QuestionForm from './QuestionForm'
-import './index.css';
+import QuestionForm from './QuestionForm';
 
 export default class Question extends Component {
     constructor(props) {
@@ -54,7 +53,7 @@ export default class Question extends Component {
             method: 'DELETE'
         })
         .then(response => response.json())
-        .then(() => this.setState({ hidden: true, question: {} }));
+        .then(() => this.props.onDelete(question));
     }
 
     render() {

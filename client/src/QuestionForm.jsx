@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { List, Input, Button, Message  } from 'semantic-ui-react';
+import './index.css';
 
 export default class QuestionForm extends Component {
     static defaultProps = {
@@ -98,21 +99,21 @@ export default class QuestionForm extends Component {
                 {!hidden && (
                     <div className='editQuestion'>
                         <div className='ui middle aligned grid'>
-                        <div className='four wide column'>
-                        <div className='ui medium header questionLabel'>Answer</div>
-                        <Input value={question.answer} onChange={this.handleAnswerChange} /> 
-                        </div>
-                        <div className='four wide column'>
-                        <List>
-                        <div className='ui medium header questionLabel'>Distractors</div>
-                        {question.distractors.map((d, index) => ( 
-                            <List.Item>
-                                <Input value={d} onChange={e => this.handleDistractorChange(index, e.target.value)} />
-                            </List.Item>
-                        ))}    
-                        </List>
-                        <Button color='blue' onClick={this.addDistractor}>Add Distractor</Button>
-                        </div>
+                            <div className='four wide column'>
+                                <div className='ui medium header questionLabel'>Answer</div>
+                                <Input value={question.answer} onChange={this.handleAnswerChange} /> 
+                            </div>
+                            <div className='four wide column'>
+                                <List>
+                                    <div className='ui medium header questionLabel'>Distractors</div>
+                                    {question.distractors.map((d, index) => ( 
+                                        <List.Item key={index}>
+                                            <Input value={d} onChange={e => this.handleDistractorChange(index, e.target.value)} />
+                                        </List.Item>
+                                    ))}    
+                                </List>
+                                <Button color='blue' onClick={this.addDistractor}>Add Distractor</Button>
+                            </div>
                         </div>
                         <Button color='green' onClick={this.handleSubmit}>Submit</Button>
                         { question.id && <Button color='red' onClick={this.handleDelete}>Delete</Button> }

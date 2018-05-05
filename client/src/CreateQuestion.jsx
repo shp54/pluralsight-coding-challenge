@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Button } from 'semantic-ui-react';
-import QuestionForm from './QuestionForm'
-import './index.css';
+import QuestionForm from './QuestionForm';
 
 export default class CreateQuestion extends Component {
     constructor(props) {
