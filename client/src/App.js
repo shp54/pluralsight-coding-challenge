@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Input, Container, Button } from 'semantic-ui-react';
+import { Input, Container } from 'semantic-ui-react';
 import QuestionList from './QuestionList';
 
 import 'semantic-ui-css/semantic.min.css';

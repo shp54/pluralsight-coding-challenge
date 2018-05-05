@@ -1,18 +1,21 @@
 import React, { Component } from 'react';
-import { List, Input, Button, Message  } from 'semantic-ui-react';
+import QuestionForm from './QuestionForm'
 import './index.css';
 
 export default class Question extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            question: this.props.question,
             hidden: true,
         };
     }
 
     toggleQuestion = (e) => {
         this.setState(prevState => ({ hidden: !prevState.hidden }))
+    }
+
+    handleCancel = (e) => {
+        this.setState({ hidden: true });
     }
 
     handleDistractorChange = (index, value) => {
@@ -36,8 +39,7 @@ export default class Question extends Component {
         }));
     }
 
-    handleSubmit = () => {
-        const { question } = this.state;
+    handleSubmit = (question) => {
         fetch(`/questions/${question.id}`, {
             method: 'PUT',
             body: JSON.stringify(question),
@@ -47,48 +49,28 @@ export default class Question extends Component {
         .catch(() => this.setState({ error: true }));
     }
 
-    handleDelete = () => {
-        const { question } = this.state;
+    handleDelete = (question) => {
         fetch(`questions/${question.id}`, {
             method: 'DELETE'
         })
         .then(response => response.json())
-        .then(() => this.setState({ question: null }));
+        .then(() => this.setState({ hidden: true, question: {} }));
     }
 
     render() {
-        const { question, hidden, success, error } = this.state;
+        const { question } = this.props;
+        const { hidden, success, error } = this.state;
         return question ? (
-            <div className={'question ' + (hidden ? 'hidden' : 'active')}>
-                <div className='ui medium header questionHeader'
-                    onClick={this.toggleQuestion}>
-                    {question.question}
-                </div>
-                {success && <Message header='Update successful!' color='green' onDismiss={e => this.setState({ success: false })} /> }
-                {error && <Message header='Update failed' color='red' onDismiss={e => this.setState({ error: false })} /> }
-                {!hidden && (
-                <div className='editQuestion'>
-                    <div className='ui middle aligned grid'>
-                    <div className='four wide column'>
-                    <div className='ui medium header questionLabel'>Answer</div>
-                    <Input value={question.answer} onChange={this.handleAnswerChange} /> 
-                    </div>
-                    <div className='four wide column'>
-                    <List>
-                    <div className='ui medium header questionLabel'>Distractors</div>
-                    {question.distractors.map((d, index) => ( 
-                        <List.Item>
-                            <Input value={d} onChange={e => this.handleDistractorChange(index, e.target.value)} />
-                        </List.Item>
-                    ))}    
-                    </List>
-                    </div>
-                    </div>
-                    <Button color='green' onClick={this.handleSubmit}>Submit</Button>
-                    <Button color='red' onClick={this.handleDelete}>Delete</Button>
-                </div>
-            )}
-            </div>
+                <QuestionForm 
+                    hidden={this.state.hidden}
+                    success={this.state.success}
+                    error={this.state.error}
+                    question={question}
+                    onSubmit={this.handleSubmit} 
+                    onDelete={this.handleDelete}
+                    onCancel={this.handleCancel}
+                    onHeaderClick={this.toggleQuestion}
+                />
         ) : null;
     }
 }
