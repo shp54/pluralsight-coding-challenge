@@ -36,18 +36,15 @@ export default class QuestionForm extends Component {
 
     addDistractor = (e) => {
         e.preventDefault();
-        let newDistractors = [...this.state.question.distractors];
-        newDistractors[newDistractors.length] = '';
         this.setState(prevState => ({
             question: {
                 ...prevState.question,
-                distractors: newDistractors
+                distractors: prevState.question.distractors.concat('')
             },
         }));
     }
 
     handleDistractorChange = (index, value) => {
-        console.log(index);
         let newDistractors = [...this.state.question.distractors];
         newDistractors[index] = value;
         this.setState(prevState => ({
@@ -93,8 +90,8 @@ export default class QuestionForm extends Component {
                         <Input onChange={this.handleQuestionChange} /> :
                         <span><Icon name={icon} />{question.question}</span> }
                 </div>
-                {success && <Message header='Update successful!' color='green' onClick={e => e.stopPropagation()} onDismiss={e => this.setState({ success: false })} /> }
-                {error && <Message header='Update failed' color='red'  onClick={e => e.stopPropagation()} onDismiss={e => this.setState({ error: false })} /> }
+                {success && <Message hidden={hidden} header='Update successful!' color='green' onClick={e => e.stopPropagation()} onDismiss={e => this.setState({ success: false })} /> }
+                {error && <Message hidden={hidden} header='Update failed' color='red'  onClick={e => e.stopPropagation()} onDismiss={e => this.setState({ error: false })} /> }
                 {!hidden && (
                     <div className='editQuestion' onClick={e => e.stopPropagation()}>
                         <div className='ui middle aligned grid'>

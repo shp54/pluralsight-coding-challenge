@@ -10,7 +10,7 @@ export default class Question extends Component {
     }
 
     toggleQuestion = (e) => {
-        this.setState(prevState => ({ hidden: !prevState.hidden }));
+        this.setState(prevState => ({ hidden: !prevState.hidden, success: false, error: false }));
     }
 
     handleDistractorChange = (index, value) => {
@@ -52,6 +52,10 @@ export default class Question extends Component {
         .then(() => this.props.onDelete(question));
     }
 
+    handleCancel = (e) => {
+        this.setState({ hidden: true, success: false, error: false });
+    }
+
     render() {
         const { question } = this.props;
         const { hidden, success, error } = this.state;
@@ -63,7 +67,7 @@ export default class Question extends Component {
                     question={question}
                     onSubmit={this.handleSubmit} 
                     onDelete={this.handleDelete}
-                    onCancel={e => this.setState({ hidden: true })} 
+                    onCancel={this.handleCancel} 
                     onHeaderClick={this.toggleQuestion}
                 />
         ) : null;
