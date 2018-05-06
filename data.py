@@ -28,7 +28,7 @@ def getItem(id):
         return { 'error': 'Tried to access nonexistent item' }
 
 def getItemMatching(search):
-    return [v for k, v in list(data.items()) if search in v['question']]
+    return [v for k, v in list(data.items()) if search.lower() in v['question'].lower()]
 
 def getAllItems():
     return [v for k, v in list(data.items())]
