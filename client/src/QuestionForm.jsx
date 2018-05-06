@@ -90,8 +90,8 @@ export default class QuestionForm extends Component {
                         <Input onChange={this.handleQuestionChange} /> :
                         <span><Icon name={icon} />{question.question}</span> }
                 </div>
-                {success && <Message hidden={hidden} header='Update successful!' color='green' onClick={e => e.stopPropagation()} onDismiss={e => this.setState({ success: false })} /> }
-                {error && <Message hidden={hidden} header='Update failed' color='red'  onClick={e => e.stopPropagation()} onDismiss={e => this.setState({ error: false })} /> }
+                {success && <Message header='Update successful!' color='green' onClick={e => e.stopPropagation()} onDismiss={e => this.setState({ success: false })} /> }
+                {error && <Message header='Update failed' color='red'  onClick={e => e.stopPropagation()} onDismiss={e => this.setState({ error: false })} /> }
                 {!hidden && (
                     <div className='editQuestion' onClick={e => e.stopPropagation()}>
                         <div className='ui middle aligned grid'>
