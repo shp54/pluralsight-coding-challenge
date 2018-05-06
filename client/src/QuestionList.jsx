@@ -15,11 +15,11 @@ export default class QuestionList extends Component {
     handleSearch = (e) => {
         const search = e.target.value;
         if (search !== '') {
-        fetch(`/questions?search=${search}`)
-            .then(response => response.json())
-            .then(questions => {
-                this.setState({ questions })
-            })
+            fetch(`/questions?search=${search}`)
+                .then(response => response.json())
+                .then(questions => {
+                    this.setState({ questions });
+                })
         } else {
             this.setState({ questions: [] })
         }
