@@ -22,18 +22,23 @@ export default class CreateQuestion extends Component {
         .catch(() => this.setState({ error: true }));
     }
 
+    handleCancel = e => this.setState({ hidden: true });
+
+    handleShowForm = e => this.setState({ hidden: false })
+
     render() {
-        const { question, hidden, success, error } = this.state;
+        const { hidden, success, error } = this.state;
         return !hidden ? (
             <QuestionForm 
                 canEditQuestion
                 onSubmit={this.handleSubmit} 
-                onCancel={e => this.setState({ hidden: true })} 
-                hidden={this.state.hidden} 
-                error={this.state.error}
+                onCancel={this.handleCancel} 
+                hidden={hidden} 
+                success={success}
+                error={error}
             />
         ) : (
-            <Button color="blue" onClick={e => this.setState({ hidden: false })}>Create Question</Button>
+            <Button color="blue" onClick={this.handleShowForm}>Create Question</Button>
         );
     }
 }

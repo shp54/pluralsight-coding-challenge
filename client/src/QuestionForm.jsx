@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { List, Input, Button, Message  } from 'semantic-ui-react';
+import { List, Input, Button, Message, Icon } from 'semantic-ui-react';
 import './index.css';
 
 export default class QuestionForm extends Component {
@@ -34,9 +34,10 @@ export default class QuestionForm extends Component {
         });
     }
 
-    addDistractor = () => {
+    addDistractor = (e) => {
+        e.preventDefault();
         let newDistractors = [...this.state.question.distractors];
-        newDistractors[newDistractors.length + 1] = '';
+        newDistractors[newDistractors.length] = '';
         this.setState(prevState => ({
             question: {
                 ...prevState.question,
@@ -46,6 +47,7 @@ export default class QuestionForm extends Component {
     }
 
     handleDistractorChange = (index, value) => {
+        console.log(index);
         let newDistractors = [...this.state.question.distractors];
         newDistractors[index] = value;
         this.setState(prevState => ({
@@ -76,28 +78,25 @@ export default class QuestionForm extends Component {
         }));
     }
 
-    handleSubmit = (e) => {
-        this.props.onSubmit(this.state.question);
-    }
+    handleSubmit = e => this.props.onSubmit(this.state.question);
 
-    handleDelete = (e) => {
-        this.props.onDelete(this.state.question);
-    }
+    handleDelete = e => this.props.onDelete(this.state.question);
 
     render() {
         const { question, hidden, success, error } = this.state;
         const { canEditQuestion } = this.props;
-
+        const icon = hidden ? 'circle arrow down' : 'circle arrow up';
         return (
                 <div className={'question ' + (hidden ? 'hidden' : 'active')} onClick={this.props.onHeaderClick}>
                 <div className='ui medium header questionHeader'>
-                    { canEditQuestion ? <Input onChange={this.handleQuestionChange} />
-                        : <span>{question.question}</span> }
+                    { canEditQuestion ? 
+                        <Input onChange={this.handleQuestionChange} /> :
+                        <span><Icon name={icon} />{question.question}</span> }
                 </div>
                 {success && <Message header='Update successful!' color='green' onDismiss={e => this.setState({ success: false })} /> }
                 {error && <Message header='Update failed' color='red' onDismiss={e => this.setState({ error: false })} /> }
                 {!hidden && (
-                    <div className='editQuestion'>
+                    <div className='editQuestion' onClick={e => e.stopPropagation()}>
                         <div className='ui middle aligned grid'>
                             <div className='four wide column'>
                                 <div className='ui medium header questionLabel'>Answer</div>
@@ -115,9 +114,11 @@ export default class QuestionForm extends Component {
                                 <Button color='blue' onClick={this.addDistractor}>Add Distractor</Button>
                             </div>
                         </div>
-                        <Button color='green' onClick={this.handleSubmit}>Submit</Button>
-                        { question.id && <Button color='red' onClick={this.handleDelete}>Delete</Button> }
-                        <Button color='blue' onClick={this.props.onCancel}>Cancel</Button>
+                        <div className='submitButtons'>
+                            <Button color='green' onClick={this.handleSubmit}>Submit</Button>
+                            { question.id && <Button color='red' onClick={this.handleDelete}>Delete</Button> }
+                            <Button color='blue' onClick={this.props.onCancel}>Cancel</Button>
+                        </div>
                     </div>
                 )}
                 </div>

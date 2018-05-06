@@ -10,11 +10,7 @@ export default class Question extends Component {
     }
 
     toggleQuestion = (e) => {
-        this.setState(prevState => ({ hidden: !prevState.hidden }))
-    }
-
-    handleCancel = (e) => {
-        this.setState({ hidden: true });
+        this.setState(prevState => ({ hidden: !prevState.hidden }));
     }
 
     handleDistractorChange = (index, value) => {
@@ -61,13 +57,13 @@ export default class Question extends Component {
         const { hidden, success, error } = this.state;
         return question ? (
                 <QuestionForm 
-                    hidden={this.state.hidden}
-                    success={this.state.success}
-                    error={this.state.error}
+                    hidden={hidden}
+                    success={success}
+                    error={error}
                     question={question}
                     onSubmit={this.handleSubmit} 
                     onDelete={this.handleDelete}
-                    onCancel={this.handleCancel}
+                    onCancel={e => this.setState({ hidden: true })} 
                     onHeaderClick={this.toggleQuestion}
                 />
         ) : null;

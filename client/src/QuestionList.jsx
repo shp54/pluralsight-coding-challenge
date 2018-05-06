@@ -37,11 +37,20 @@ export default class QuestionList extends Component {
         return (
             <div>
                 <div>
-                    <Input onChange={this.handleSearch} size="large" placeholder="Search questions..." />
+                    <Input 
+                        onChange={this.handleSearch} 
+                        size="large" 
+                        placeholder="Search questions..."
+                        style={{ marginBottom: 5 }} 
+                    />
                 </div>
                 <CreateQuestion />
                 <List className='questionList'>
-                    {questions.map(item => <Question question={item} key={item.id} onDelete={this.handleDelete} />)}
+                    {questions.map(item => <Question 
+                        question={item} 
+                        key={item.id} 
+                        onDelete={this.handleDelete}
+                    />)}
                 </List>
             </div>
         );
